@@ -14,24 +14,40 @@ The frameworks that we used was:
 
 > Observation: To run, you have to install `Docker` and `Docker Compose`.
 
-## Usage  
+## Methodology  
 
-At first, it was defined 2 types of workload levels (numbers of concurrent users) to be submitted to the target service by each load generation tool. 
+At first, the tests used the following parameters:
+- Duration: 60 seconds
+- Users: 10 and 100 users
+- Load: 10 and 100 users/s*
 
-Numbers of concurrent users: 10 and 100 users 
+> Note: the load may not be 10 or 100 u/s, since each platform defines its way of generating load. 
 
 After that, the performance of the target system was monitored with Prometheus, then Prometheus was integrated with Grafana, in order to allow the visualization, in real time, of the httpbin metrics being collected by Prometheus during the load tests.
 
-## Usage 
+## HttpBin
+
+Although, Gunicorn (WSGI Server used by HTTPBin) has native integration with StatsD-Exporte it was necessary to modify the dockerfile to configure the command used to run the application. In this way, Gunicorn feeds StatsD data from Gunicorn, which in turn is consumed by Prometheus.
+
+## Docker Compose
+
+All necessary files were created from Docker images via DockerHub, with the exception of HTTPBin which had its image built from local dockerfile.
+
+Public images used:
+1. graphane/grafane
+2. prom/prometheus
+3. prom/statsd-exporter
+
+## Local usage 
 
 In order to replicated what was done you have to: 
 1. Download httpbin code 
-2. Change 
+2. Modify dockerfile to configure the command used to run the application
 3. Clone this project with:  
 ```
 git clone https://github.com/alicemalzac/loadtest
 ```
-4. To run, use the command below: 
+4. And run, with the command below: 
 ```
 docker-compose up --build
 ```
@@ -44,5 +60,3 @@ HttpBin: http://localhost:8080
 Statsd: http://localhost:9102/metrics
 NodeExporter: http://localhost:9110
 cAdvisor: http://localhost:8090
-
-
