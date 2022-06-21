@@ -1,0 +1,9 @@
+brew update && brew install vegeta
+
+10 usuários: 
+echo "GET http://localhost:8080" | vegeta attack -rate=10 -duration=60s | tee results.bin | vegeta report
+vegeta report -type=json results.bin > 10_usuarios.json
+
+100 usuários: 
+echo "GET http://localhost:8080" | vegeta attack -rate=100 -duration=60s | tee results.bin | vegeta report
+vegeta report -type=json results.bin > 100_usuarios.json

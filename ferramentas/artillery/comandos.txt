@@ -1,0 +1,8 @@
+npm install -g artillery
+docker run -p 80:80 kennethreitz/httpbin -> localhost
+
+artillery quick --count 10 -n 20 -k http://localhost:8080
+
+artillery run -o results_100.json -e local load-tests-sitecontagem.yml
+artillery report -o results_100.html results_100.json
+artillery report -o results.html 100_usuarios.json

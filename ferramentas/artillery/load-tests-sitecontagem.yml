@@ -1,0 +1,15 @@
+config:
+  environments:
+    local:
+      target: "http://localhost:8080/"
+      phases:
+        - name: Teste de Carga para 10 usuários
+          arrivalRate: 10 #determines the number of virtual users sent to the endpoints per second (10 users)
+          duration: 60 #determines that virtual users will be generated for 30 seconds
+scenarios:
+  - name: "Teste de Carga para 10 usuários"
+    flow:
+    - get:
+        url: "/"
+
+

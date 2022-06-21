@@ -1,0 +1,12 @@
+* ApacheBench - Teste de Carga
+Documentação: https://httpd.apache.org/docs/2.4/programs/ab.html
+
+1) Inicializar HttpBin em Docker na porta 8080 de Localhost
+Comando: sudo docker run -p 8080:80 kennethreitz/httpbin
+
+2) Inicializar os testes de ApacheBench com duração de 5 minutos e limite padrão de 50000 requests
+- Teste 1: 10 Usuários
+ab -c 10 -t 60 http://localhost:8080/
+
+- Teste 2: 100 Usuários
+ab -c 100 -t 300 http://localhost:8080/

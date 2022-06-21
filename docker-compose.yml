@@ -1,0 +1,114 @@
+version: '3'
+
+networks:
+  monitor-net:
+    driver: bridge
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+
+services:
+
+  httpbin:
+    build: '../httpbin'
+    container_name: httpbin
+    environment:
+      APP_NAME: "httpbin"
+      STATSD_HOST: "statsd"
+      STATSD_PORT: "9125"
+    ports:
+      - "8080:80"      
+    networks: 
+      - monitor-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+    - "./prometheus.yml:/prometheus.yml"
+    command:
+      - '--config.file=/prometheus.yml'
+      - '--log.level=debug'
+      - '--web.listen-address=:9090'
+    restart: unless-stopped
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
+    networks:
+      - monitor-net  
+
+  grafana:
+   image: grafana/grafana:latest
+   container_name: grafana
+   volumes:
+     - grafana_data:/var/lib/grafana
+     - ./grafana/datasources:/etc/grafana/datasources
+     - ./grafana/dashboards:/etc/grafana/dashboards
+   environment:
+     - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+     - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+     - GF_USERS_ALLOW_SIGN_UP=false
+   restart: unless-stopped
+   expose:
+     - 3000
+   ports:
+     - 3000:3000
+   networks:
+     - monitor-net     
+  
+  nodeexporter:
+    image: prom/node-exporter:latest
+    container_name: nodeexporter
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    expose:
+      - 9110
+    ports:
+      - "9110:9110"      
+    networks:
+      - monitor-net
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+       - "8090:8090"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    restart: unless-stopped
+  
+  statsd: 
+    image: prom/statsd-exporter:latest
+    container_name: statsd
+    command: 
+      - '--statsd.mapping-config=/statsd/test-mapping.conf'
+      - '--statsd.listen-udp=:9125'
+      - '--web.listen-address=:9102'
+    expose:
+      - 9102
+      - 9125
+    ports:
+      - "9125:9125"
+      - "9102:9102"
+      - "8080:8080/udp"
+    volumes:
+      - "./test-mapping.conf:/statsd/test-mapping.conf"
+    networks:
+      - monitor-net

@@ -1,0 +1,12 @@
+* Requests: shows the total number of requests sent during the test and the rate of the requests
+* Duration: shows the total duration of the test, the attack period simulating load on the application and the wait time
+* Latencies: shows the mean latency, 50th, 95th an 99th percentiles, respectively, of the latencies of all requests in an attack as well as the maximum latency recognized.
+* Bytes In and Bytes Out shows:
+    * The total number of bytes sent (out) or received (in) with the request or response bodies.
+    * The mean number of bytes sent (out) or received (in) with the request or response bodies.
+* Success shows the percentiles of successful requests sent to the application
+* Status Codes provides a counter of the HTTP response codes received and their oc
+
+
+-duration flag specifies the duration of the attack,
+-rate flag defines the number of requests per time unit (the default value is set to 50/1s):
