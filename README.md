@@ -60,3 +60,6 @@ After that, you can access these services:
 - Statsd: http://localhost:9102/metrics
 - NodeExporter: http://localhost:9110
 - cAdvisor: http://localhost:8090
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
