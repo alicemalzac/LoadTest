@@ -32,11 +32,11 @@ Although, Gunicorn (WSGI Server used by HTTPBin) has native integration with Sta
 All necessary files were created from Docker images via DockerHub, with the exception of HTTPBin which had its image built from local dockerfile.
 
 Public images used:
-1. graphane/grafane
-2. prom/prometheus
-3. prom/statsd-exporter
+- graphane/grafane
+- prom/prometheus
+- prom/statsd-exporter
 
-> Observation: To run, you have to install `Docker` and `Docker Compose`.
+> Note: To run, you have to install `Docker` and `Docker Compose`.
 
 ## Local usage 
 
