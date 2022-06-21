@@ -54,9 +54,9 @@ docker-compose up --build
 
 After that, you can access these services:
 
-Grafana: http://localhost:3000
-Prometheus: http://localhost:9090
-HttpBin: http://localhost:8080
-Statsd: http://localhost:9102/metrics
-NodeExporter: http://localhost:9110
-cAdvisor: http://localhost:8090
+- Grafana: http://localhost:3000
+- Prometheus: http://localhost:9090
+- HttpBin: http://localhost:8080
+- Statsd: http://localhost:9102/metrics
+- NodeExporter: http://localhost:9110
+- cAdvisor: http://localhost:8090
