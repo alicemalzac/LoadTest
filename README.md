@@ -12,8 +12,6 @@ The frameworks that we used was:
 3. Locust
 4. Artillery
 
-> Observation: To run, you have to install `Docker` and `Docker Compose`.
-
 ## Methodology  
 
 At first, the tests used the following parameters:
@@ -37,6 +35,8 @@ Public images used:
 1. graphane/grafane
 2. prom/prometheus
 3. prom/statsd-exporter
+
+> Observation: To run, you have to install `Docker` and `Docker Compose`.
 
 ## Local usage 
 
