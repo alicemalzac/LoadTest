@@ -29,7 +29,7 @@ In order to replicated what was done you have to:
 2. Change 
 3. Clone this project with:  
 ```
-git clone 
+git clone https://github.com/alicemalzac/loadtest
 ```
 4. To run, use the command below: 
 ```
